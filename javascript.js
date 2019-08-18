@@ -8,51 +8,83 @@ users perspective */
 
 
 function computerplay() {
-    //generate a random whole number between 1 and 3
-    var computerRandom = Math.floor(Math.random()*3)+1;
-    if (computerRandom == 1){
-        computerSelection = 'Rock'
-    } else if (computerRandom == 2){
-        computerSelection = 'Paper'
-    } else {
-        computerSelection = 'Scissors'
-    }
-    return computerSelection
+    //generate
+    var index = ['rock','scissors','paper']
+    var random = Math.floor(Math.random()*3)
+    return index[random]
 }
-console.log(computerplay())
+
 function playerplay(){
     var playerSelection = prompt("Please select your option")
-    /*if (selection == 'Rock'){
-        continue
-    } else {
-        continue
-    }*/
-    return playerSelection
+    return playerSelection.toLowerCase()
 }
-console.log(playerplay())
 
-function playRound(playerSelection, computerSelection){
-    //rock
-    if (playerSelection == 'Rock' && computerSelection == 'Scissors'){
-        rount_output = 'You Win! Rock beats Scissors!'
-    } else if (playerSelection == 'Rock' && computerSelection == 'Paper'){
-        rount_output = 'You Lose! Paper beats Rock!'
-    //paper
-    } else if (playerSelection == 'Paper' && computerSelection == 'Rock'){
-        round_output = 'You Win! Paper beats Rock!'
-    } else if (playerSelection == 'Paper' && computerSelection == 'Scissors'){
-        round_output = 'You Lose! Scissors beats Paper'
-    //Scissors
-    } else if (playerSelection == 'Scissors' && computerSelection == 'Paper'){
-        round_output = 'You Win! Scissors beats Paper'
-    } else if (playerSelection == 'Scissors' && computerSelection == 'Rock'){
-        round_output == 'You Lose! Rock beats Scissors'
-    } else {
-        round_output == 'Tie!'
+function playRound(player_sel,computer_sel){
+    //condition player wins
+    if (
+            (player_sel == 'rock' && computer_sel == 'scissors')  ||
+            (player_sel == 'scissors' && computer_sel == 'paper') ||
+            (player_sel == 'paper' && computer_sel == 'rock')
+        ) {
+            round_output = 'You Win! '+player_sel+' beats '+computer_sel
+            round_num    = 0
+        }
+    //condition tie
+    else if (player_sel == computer_sel){
+            round_output = 'DRAW!'
+            round_num    = 1
+
     }
+    //condition player loses
+    else {
+            round_output = 'You Lose! '+computer_sel+' beats '+player_sel
+            round_num = 2
+    }
+    //console.log(round_output,round_num)
+    return [round_output,round_num]
+    
 }
-playRound()
-/*
-function game(){
 
-}*/
+
+
+/*var test_1 = playRound(playerplay(),computerplay())
+console.log(test_1[0])
+console.log(test_1[1])*/
+function game()
+{
+var i =0;
+var j =0;
+var score = [0,0];
+  while (i < 5 && j < 5)
+  {
+    var round_result =playRound(playerplay(),computerplay())
+        if (round_result[1] == 0){
+            i++;
+            score[0] += 1;
+            
+            console.log(round_result[0])
+        }
+        else if (round_result[1]== 2){
+            j++;
+            score[1] += 1
+            console.log(round_result[0])
+        }  else {
+            console.log(round_result[0])
+        }
+    console.log(score[0],score[1])
+  }
+  return score
+}
+console.log(game())
+
+function showWinner(){
+    var result = game()
+    if (result[0] > result[1]){
+        winner = 'Player has bested the computer! the final score is player:'+score[0]+' computer:'+score[1]
+    }
+    else {
+        winner = 'Computer has bested the player the final score is player:'+score[0]+' computer:'+score[1]
+    }
+    console.log(winner)
+    return winner
+}
